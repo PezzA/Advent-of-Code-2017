@@ -84,14 +84,12 @@ func getKeyCode(inputData string, startPoint Point, keyPad [][]string) string {
 	return keyCode.String()
 }
 
-// Day02_01 solves day two, part one!
-func PartOne(inputData string) string {
-	return getKeyCode(inputData, Point{2, 2}, getKeyPad())
+func PartOne() (string, error) {
+	return getKeyCode(day2PuzzleInput(), Point{2, 2}, getKeyPad()), nil
 }
 
-// Day02_02 solves day two, part one!
-func PartTwo(inputData string) string {
-	return getKeyCode(inputData, Point{3, 3}, getStarPad())
+func PartTwo() (string, error) {
+	return getKeyCode(day2PuzzleInput(), Point{3, 3}, getStarPad()), nil
 }
 
 func getKey(cursor Point, pad [][]string) string {

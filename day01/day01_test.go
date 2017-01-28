@@ -6,12 +6,12 @@ import "testing"
 func BenchmarkPartOne(b *testing.B) {
 	// run the Fib function b.N times
 	for n := 0; n < b.N; n++ {
-		PartOne(puzzleInput())
+		PartOne()
 	}
 }
 
 func Test_Part1(t *testing.T) {
-	result, err := PartOne(puzzleInput())
+	result, err := PartOne()
 
 	if err != nil {
 		t.Fatal("Failed testing part one", err)
@@ -23,7 +23,7 @@ func Test_Part1(t *testing.T) {
 }
 
 func Test_Part2(t *testing.T) {
-	result, err := PartTwo(puzzleInput())
+	result, err := PartTwo()
 
 	if err != nil {
 		t.Fatal("Failed testing part two", err)

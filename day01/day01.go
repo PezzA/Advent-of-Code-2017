@@ -36,7 +36,11 @@ func getlength(p Point) int {
 	return Abs(p.x) + Abs(p.y)
 }
 
-func PartOne(inputData string) (string, error) {
+func PartOne() (string, error) {
+	return solveRawLocation(puzzleInput())
+}
+
+func solveRawLocation(inputData string) (string, error) {
 	var currentPosition = position{Point{0, 0}, 0}
 
 	for _, ins := range parseInstructions(inputData) {
@@ -55,7 +59,11 @@ func containsPoint(points []Point, point Point) bool {
 	return false
 }
 
-func PartTwo(inputData string) (string, error) {
+func PartTwo() (string, error) {
+	return solveActualLocation(puzzleInput())
+}
+
+func solveActualLocation(inputData string) (string, error) {
 	var currentPosition = position{Point{0, 0}, 0}
 
 	points := make([]Point, 0)

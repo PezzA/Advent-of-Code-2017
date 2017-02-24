@@ -12,6 +12,11 @@ import (
 
 type puzzle func() (string, error)
 
+type dayRunner interface {
+	PartOne() (string, error)
+	PartTwo() (string, error)
+}
+
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("USEAGE: advent-of-go <day>")

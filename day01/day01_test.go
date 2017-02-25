@@ -4,7 +4,6 @@ import "testing"
 
 // BenchmarkPartOne tests the performance of the first day part
 func BenchmarkPartOne(b *testing.B) {
-	// run the Fib function b.N times
 	for n := 0; n < b.N; n++ {
 		PartOne()
 	}

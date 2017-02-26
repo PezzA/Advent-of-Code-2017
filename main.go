@@ -7,6 +7,7 @@ import (
 	"github.com/pezza/advent-of-go/day02"
 	"github.com/pezza/advent-of-go/day03"
 	"github.com/pezza/advent-of-go/day04"
+	"github.com/pezza/advent-of-go/day05"
 
 	"os"
 	"strconv"
@@ -37,6 +38,8 @@ func main() {
 		runDay(day03.PartOne, day03.PartTwo)
 	case 4:
 		runDay(day04.PartOne, day04.PartTwo)
+	case 5:
+		runDay(day05.PartOne, day05.PartTwo)
 	}
 }
 

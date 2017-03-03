@@ -34,7 +34,6 @@ func getCharMaps([]string) []charMap {
 
 // PartOne runs partone!
 func PartOne() (string, error) {
-
 	charmaps := getCharMaps(parseLines(PuzzleInput()))
 
 	var code string

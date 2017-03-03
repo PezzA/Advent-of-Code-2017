@@ -5,6 +5,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	. "github.com/pezza/advent-of-go/mapSorter"
 )
 
 type roomData string
@@ -100,19 +102,13 @@ func (r roomData) getCheckSum() string {
 		}
 	}
 
-	pl := make(PairList, len(alphaMap))
+	sortedMap := MapToList(alphaMap)
 
-	i := 0
-	for k, v := range alphaMap {
-		pl[i] = Pair{k, v}
-		i++
-	}
-
-	sort.Sort(sort.Reverse(pl))
+	sort.Sort(sort.Reverse(sortedMap))
 
 	checkSum := ""
 
-	for _, val := range pl[:5] {
+	for _, val := range sortedMap[:5] {
 		checkSum += string(val.Key)
 	}
 

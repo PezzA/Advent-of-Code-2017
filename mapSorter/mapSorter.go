@@ -1,10 +1,23 @@
-package day04
+package mapsorter
 
 type Pair struct {
 	Key   rune
 	Value int
 }
+
 type PairList []Pair
+
+func MapToList(sourceMap map[rune]int) PairList {
+	pl := make(PairList, len(sourceMap))
+
+	i := 0
+	for k, v := range sourceMap {
+		pl[i] = Pair{Key: k, Value: v}
+		i++
+	}
+
+	return pl
+}
 
 func (p PairList) Less(i, j int) bool {
 

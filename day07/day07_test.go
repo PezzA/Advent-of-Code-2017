@@ -1,26 +1,52 @@
 package day07
 
-import "testing"
-import "log"
+import (
+	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
+)
 
 func Test_AbbaDetection(t *testing.T) {
-	if !isABBA("fgbabbaer") {
-		t.Errorf("should have detected abba")
-	}
+	Convey("Should detect ABBAs", t, func() {
+		isAbba, abbaList := isABBA("fgbabbaer")
 
-	if !isABBA("ertyuuy") {
-		t.Errorf("should have detected abba")
-	}
+		So(isAbba, ShouldEqual, true)
+		So(abbaList, ShouldContain, "abba")
 
-	if isABBA("dfgdfgertertdfg") {
-		t.Errorf("should not have detected abba")
-	}
+		isAbba, abbaList = isABBA("wrwqryuuyqerw")
+		So(isAbba, ShouldEqual, true)
+		So(abbaList, ShouldContain, "yuuy")
 
-	log.Println(getHyperNetSequences("wysextplwqpvipxdv[srzvtwbfzqtspxnethm]syqbzgtboxxzpwr[kljvjjkjyojzrstfgrw]obdhcczonzvbfby[svotajtpttohxsh]cooktbyumlpxostt"))
-	log.Println(getIPSequences("wysextplwqpvipxdv[srzvtwbfzqtspxnethm]syqbzgtboxxzpwr[kljvjjkjyojzrstfgrw]obdhcczonzvbfby[svotajtpttohxsh]cooktbyumlpxostt"))
+		isAbba, abbaList = isABBA("dfgdfgertertdfg")
+		So(isAbba, ShouldEqual, false)
+		So(abbaList, ShouldHaveLength, 0)
 
-	log.Println(supportsTLS("abba[mnop]qrst"))
-	log.Println(supportsTLS("abcd[bddb]xyyx"))
-	log.Println(supportsTLS("aaaa[qwer]tyui"))
-	log.Println(supportsTLS("ioxxoj[asdfgh]zxcvbn"))
+		isAbba, abbaList = isABBA("dfgdfgertertdfguiiu")
+		So(isAbba, ShouldEqual, true)
+		So(abbaList, ShouldContain, "uiiu")
+	})
+
+	Convey("Can detect TLS", t, func() {
+		So(supportsTLS("abba[mnop]qrst"), ShouldEqual, true)
+		So(supportsTLS("abcd[bddb]xyyx"), ShouldEqual, false)
+		So(supportsTLS("aaaa[qwer]tyui"), ShouldEqual, false)
+		So(supportsTLS("ioxxoj[asdfgh]zxcvbn"), ShouldEqual, true)
+	})
+
+	Convey("Can detect ABAs", t, func() {
+		isAba, abaList := isABA("aaaeeetytert")
+		So(isAba, ShouldEqual, true)
+		So(abaList, ShouldContain, "tyt")
+
+		isAba, abaList = isABA("abaeeetytert")
+		So(isAba, ShouldEqual, true)
+		So(abaList, ShouldHaveLength, 2)
+		So(abaList, ShouldContain, "tyt")
+		So(abaList, ShouldContain, "aba")
+	})
+
+	Convey("Can reverse aba", t, func() {
+		So(reverseABA("aba"), ShouldEqual, "bab")
+		So(reverseABA("xyx"), ShouldEqual, "yxy")
+	})
 }

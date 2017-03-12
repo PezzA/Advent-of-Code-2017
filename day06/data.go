@@ -1,6 +1,7 @@
 package day06
 
-func TestInput() string  {
+// TestInput returns the test input for day06
+func TestInput() string {
 	return `eedadn
 drvtee
 eandsr
@@ -19,7 +20,8 @@ dvrsen
 enarar`
 }
 
-func PuzzleInput() string  {
+// PuzzleInput returns the puzzle input for day06
+func PuzzleInput() string {
 	return `wrqhvxvz
 fyzrlmet
 mnoqzwlx

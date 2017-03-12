@@ -10,12 +10,13 @@ import (
 	"github.com/pezza/advent-of-go/day05"
 	"github.com/pezza/advent-of-go/day06"
 	"github.com/pezza/advent-of-go/day07"
+	"github.com/pezza/advent-of-go/day09"
 
 	"os"
 	"strconv"
 )
 
-type puzzle func() (string, error)
+type puzzle func(string) (string, error)
 
 type dayRunner interface {
 	PartOne() (string, error)
@@ -33,24 +34,26 @@ func main() {
 
 	switch day, _ := strconv.Atoi(os.Args[1]); day {
 	case 1:
-		runDay(day01.PartOne, day01.PartTwo)
+		runDay(day01.PartOne, day01.PartTwo, day01.PuzzleInput())
 	case 2:
-		runDay(day02.PartOne, day02.PartTwo)
+		runDay(day02.PartOne, day02.PartTwo, day02.PuzzleInput())
 	case 3:
-		runDay(day03.PartOne, day03.PartTwo)
+		runDay(day03.PartOne, day03.PartTwo, day03.PuzzleInput())
 	case 4:
-		runDay(day04.PartOne, day04.PartTwo)
+		runDay(day04.PartOne, day04.PartTwo, day04.PuzzleInput())
 	case 5:
-		runDay(day05.PartOne, day05.PartTwo)
+		runDay(day05.PartOne, day05.PartTwo, day05.PuzzleInput())
 	case 6:
-		runDay(day06.PartOne, day06.PartTwo)
+		runDay(day06.PartOne, day06.PartTwo, day06.PuzzleInput())
 	case 7:
-		runDay(day07.PartOne, day07.PartTwo)
+		runDay(day07.PartOne, day07.PartTwo, day07.PuzzleInput())
+	case 9:
+		runDay(day09.PartOne, day09.PartTwo, day09.PuzzleInput())
 	}
 }
 
-func runDay(partOne puzzle, partTwo puzzle) {
-	partOneResult, partOneErr := partOne()
+func runDay(partOne puzzle, partTwo puzzle, input string) {
+	partOneResult, partOneErr := partOne(input)
 	fmt.Print("Part One ")
 	if partOneErr != nil {
 		fmt.Print(partOneErr)
@@ -58,7 +61,7 @@ func runDay(partOne puzzle, partTwo puzzle) {
 		fmt.Print(partOneResult)
 	}
 	fmt.Print("\n")
-	partTwoResult, partTwoErr := partTwo()
+	partTwoResult, partTwoErr := partTwo(input)
 
 	fmt.Print("Part Two ")
 	if partTwoErr != nil {

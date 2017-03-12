@@ -12,10 +12,10 @@ type triangle struct {
 }
 
 // PartOne executes part one of the puzzle
-func PartOne() (string, error) {
+func PartOne(input string) (string, error) {
 	validCounter := 0
 
-	for _, t := range getTriangles(PuzzleInput()) {
+	for _, t := range getTriangles(input) {
 		if t.isValid() {
 			validCounter++
 		}
@@ -25,10 +25,10 @@ func PartOne() (string, error) {
 }
 
 // PartTwo executes part two of the puzzle
-func PartTwo() (string, error) {
+func PartTwo(input string) (string, error) {
 	validCounter := 0
 
-	for _, t := range getColTriangles(PuzzleInput()) {
+	for _, t := range getColTriangles(input) {
 		if t.isValid() {
 			validCounter++
 		}

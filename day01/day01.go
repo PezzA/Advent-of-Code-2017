@@ -6,16 +6,18 @@ import (
 	"strings"
 )
 
-func puzzleInput() string {
+// PuzzleInput returns the main puzzle input for day01
+func PuzzleInput() string {
 	return "R1, R1, R3, R1, R1, L2, R5, L2, R5, R1, R4, L2, R3, L3, R4, L5, R4, R4, R1, L5, L4, R5, R3, L1, R4, R3, L2, L1, R3, L4, R3, L2, R5, R190, R3, R5, L5, L1, R54, L3, L4, L1, R4, R1, R3, L1, L1, R2, L2, R2, R5, L3, R4, R76, L3, R4, R191, R5, R5, L5, L4, L5, L3, R1, R3, R2, L2, L2, L4, L5, L4, R5, R4, R4, R2, R3, R4, L3, L2, R5, R3, L2, L1, R2, L3, R2, L1, L1, R1, L3, R5, L5, L1, L2, R5, R3, L3, R3, R5, R2, R5, R5, L5, L5, R2, L3, L5, L2, L1, R2, R2, L2, R2, L3, L2, R3, L5, R4, L4, L5, R3, L4, R1, R3, R2, R4, L2, L3, R2, L5, R5, R4, L2, R4, L1, L3, L1, L3, R1, R2, R1, L5, R5, R3, L3, L3, L2, R4, R2, L5, L1, L1, L5, L4, L1, L1, R1"
 }
 
+// Point represents a basic 2d co-ordinate
 type Point struct {
 	x int
 	y int
 }
 
-func Abs(i int) int {
+func abs(i int) int {
 	if i < 0 {
 		return -i
 	}
@@ -33,11 +35,12 @@ type position struct {
 }
 
 func getlength(p Point) int {
-	return Abs(p.x) + Abs(p.y)
+	return abs(p.x) + abs(p.y)
 }
 
-func PartOne() (string, error) {
-	return solveRawLocation(puzzleInput())
+// PartOne returns the solution for day01 part one
+func PartOne(input string) (string, error) {
+	return solveRawLocation(input)
 }
 
 func solveRawLocation(inputData string) (string, error) {
@@ -59,8 +62,9 @@ func containsPoint(points []Point, point Point) bool {
 	return false
 }
 
-func PartTwo() (string, error) {
-	return solveActualLocation(puzzleInput())
+// PartTwo returns the solution for day01 part two
+func PartTwo(input string) (string, error) {
+	return solveActualLocation(input)
 }
 
 func solveActualLocation(inputData string) (string, error) {

@@ -6,14 +6,15 @@ import (
 	"strconv"
 	"strings"
 
-	. "github.com/pezza/advent-of-go/mapSorter"
+	mapsorter "github.com/pezza/advent-of-go/mapSorter"
 )
 
 type roomData string
 
-func PartOne() (string, error) {
+// PartOne returns the solution for day04 Part One
+func PartOne(input string) (string, error) {
 	overall := 0
-	for _, line := range strings.Split(PuzzleInput(), "\n") {
+	for _, line := range strings.Split(input, "\n") {
 		room := roomData(line)
 
 		if room.isValid() {
@@ -24,8 +25,9 @@ func PartOne() (string, error) {
 	return strconv.Itoa(overall), nil
 }
 
-func PartTwo() (string, error) {
-	for _, line := range strings.Split(PuzzleInput(), "\n") {
+// PartTwo returns the solution for day04 Part Two
+func PartTwo(input string) (string, error) {
+	for _, line := range strings.Split(input, "\n") {
 
 		room := roomData(line)
 
@@ -102,7 +104,7 @@ func (r roomData) getCheckSum() string {
 		}
 	}
 
-	sortedMap := MapToList(alphaMap)
+	sortedMap := mapsorter.MapToList(alphaMap)
 
 	sort.Sort(sort.Reverse(sortedMap))
 

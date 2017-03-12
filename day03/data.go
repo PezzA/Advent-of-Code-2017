@@ -1,6 +1,6 @@
 package day03
 
-// PuzzleInput days puzzle input
+// PuzzleInput returns the puzzle input for day03
 func PuzzleInput() string {
 	return `  785  516  744
   272  511  358

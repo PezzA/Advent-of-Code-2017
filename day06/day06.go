@@ -32,9 +32,9 @@ func getCharMaps([]string) []charMap {
 	return arrs
 }
 
-// PartOne runs partone!
-func PartOne() (string, error) {
-	charmaps := getCharMaps(parseLines(PuzzleInput()))
+// PartOne returns the solution for day06 PartOne
+func PartOne(input string) (string, error) {
+	charmaps := getCharMaps(parseLines(input))
 
 	var code string
 
@@ -47,9 +47,9 @@ func PartOne() (string, error) {
 	return code, nil
 }
 
-// PartTwo runs parttwo!
-func PartTwo() (string, error) {
-	charmaps := getCharMaps(parseLines(PuzzleInput()))
+// PartTwo returns the solution for day06 PartTwo
+func PartTwo(input string) (string, error) {
+	charmaps := getCharMaps(parseLines(input))
 
 	var code string
 

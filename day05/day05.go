@@ -6,14 +6,14 @@ import (
 	"strconv"
 )
 
+// PuzzleInput returns the puzzle input for day 05
 func PuzzleInput() string {
 	return `ffykfhsq`
 }
 
-func PartOne() (string, error) {
+// PartOne returns the solution for day 05 part one
+func PartOne(input string) (string, error) {
 	hasher := md5.New()
-
-	input := PuzzleInput()
 
 	var password string
 
@@ -31,10 +31,9 @@ func PartOne() (string, error) {
 	return password, nil
 }
 
-func PartTwo() (string, error) {
+// PartTwo returns the solution for day 05 part two
+func PartTwo(input string) (string, error) {
 	hasher := md5.New()
-
-	input := PuzzleInput()
 
 	passMap := make(map[int]string)
 

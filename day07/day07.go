@@ -109,8 +109,8 @@ func supportsTLS(s string) bool {
 }
 
 // PartTwo runs PartTwo for day07
-func PartTwo() (string, error) {
-	ips := getIPAddresses(PuzzleInput())
+func PartTwo(input string) (string, error) {
+	ips := getIPAddresses(input)
 
 	valid := 0
 
@@ -124,8 +124,8 @@ func PartTwo() (string, error) {
 }
 
 // PartOne runs PartOne for day07
-func PartOne() (string, error) {
-	ips := getIPAddresses(PuzzleInput())
+func PartOne(input string) (string, error) {
+	ips := getIPAddresses(input)
 
 	valid := 0
 

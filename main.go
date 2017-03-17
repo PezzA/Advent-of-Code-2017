@@ -11,6 +11,7 @@ import (
 	"github.com/pezza/advent-of-go/day06"
 	"github.com/pezza/advent-of-go/day07"
 	"github.com/pezza/advent-of-go/day09"
+	"github.com/pezza/advent-of-go/day14"
 
 	"os"
 	"strconv"
@@ -49,6 +50,8 @@ func main() {
 		runDay(day07.PartOne, day07.PartTwo, day07.PuzzleInput())
 	case 9:
 		runDay(day09.PartOne, day09.PartTwo, day09.PuzzleInput())
+	case 14:
+		runDay(day14.PartOne, day14.PartTwo, day14.PuzzleInput())
 	}
 }
 

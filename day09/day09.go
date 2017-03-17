@@ -13,7 +13,6 @@ type section struct {
 }
 
 func getRenderedLength(sx []section) int {
-
 	length := 0
 
 	for _, sec := range sx {

@@ -1,7 +1,6 @@
 package day11
 
-// TestInput returns the text input day 11
-func TestInput() string {
+func testInput() string {
 	return `The first floor contains a hydrogen-compatible microchip and a lithium-compatible microchip.
 The second floor contains a hydrogen generator.
 The third floor contains a lithium generator.

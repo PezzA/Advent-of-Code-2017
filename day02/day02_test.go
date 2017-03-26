@@ -3,7 +3,7 @@ package day02
 import "testing"
 
 func Test_Part1(t *testing.T) {
-	result, err := PartOne()
+	result, err := PartOne(PuzzleInput())
 
 	if err != nil {
 		t.Fatal("Failed testing part one", err)
@@ -15,7 +15,7 @@ func Test_Part1(t *testing.T) {
 }
 
 func Test_Part2(t *testing.T) {
-	result, err := PartTwo()
+	result, err := PartTwo(PuzzleInput())
 
 	if err != nil {
 		t.Fatal("Failed testing part two", err)

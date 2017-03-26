@@ -12,7 +12,7 @@ func Test_Regex(t *testing.T) {
 			instruction, error := parseInstruction("rect 2x2")
 
 			So(error, ShouldEqual, nil)
-			So(instruction.instuction, ShouldEqual, "")
+			So(instruction.instruction, ShouldEqual, "")
 			So(instruction.reg1, ShouldEqual, 2)
 			So(instruction.reg2, ShouldEqual, 2)
 		})

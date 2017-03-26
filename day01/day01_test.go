@@ -2,15 +2,8 @@ package day01
 
 import "testing"
 
-// BenchmarkPartOne tests the performance of the first day part
-func BenchmarkPartOne(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		PartOne()
-	}
-}
-
 func Test_Part1(t *testing.T) {
-	result, err := PartOne()
+	result, err := PartOne(PuzzleInput())
 
 	if err != nil {
 		t.Fatal("Failed testing part one", err)
@@ -22,7 +15,7 @@ func Test_Part1(t *testing.T) {
 }
 
 func Test_Part2(t *testing.T) {
-	result, err := PartTwo()
+	result, err := PartTwo(PuzzleInput())
 
 	if err != nil {
 		t.Fatal("Failed testing part two", err)

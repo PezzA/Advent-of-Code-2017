@@ -24,4 +24,6 @@ func Test_Day11(t *testing.T) {
 			f.drawFacility()
 		})
 	})
+
+	elevatorCombinations([]string{"HM", "HG", "LM", "LG"})
 }

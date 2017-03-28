@@ -1,5 +1,12 @@
 package day11
 
+import (
+	"log"
+	"math"
+	"strconv"
+	"strings"
+)
+
 // PartOne returns the solution to day11 part one
 func PartOne(input string) (string, error) {
 	return "", nil
@@ -10,23 +17,28 @@ func PartTwo(input string) (string, error) {
 	return "", nil
 }
 
-// can only consider combinations on the floor your are on.
-
-// a b c
-// can i take a up
-// can i take a down
-// can i take b up
-// can i take b down
-// can i take c up
-// can i take c down
-// can i take a + b up
-// can i take a + b down
-// can i take a + c up
-// can i take a + c down
-// can i take b + c up
-// can i take b + c down
-
-func cart(bits []string) [][]string {
+// Given a list of items, returns a list of
+// all the possibly combinations of items
+// that could be put into the elevator.
+func elevatorCombinations(bits []string) [][]string {
 	parts := make([][]string, 0)
 
+	maxCard := int(math.Pow(2, float64(len(bits))))
+
+	for i := 0; i < maxCard; i++ {
+		takeParts := make([]string, 0)
+		count := strings.Count(strconv.FormatInt(int64(i), 2), "1")
+		if count == 1 || count == 2 {
+			for j := 0; j < len(bits); j++ {
+				if i&(1<<uint(j)) != 0 {
+					takeParts = append(takeParts, bits[j])
+				}
+			}
+		}
+		if len(takeParts) > 0 {
+			parts = append(parts, takeParts)
+		}
+	}
+	log.Println(parts)
+	return parts
 }

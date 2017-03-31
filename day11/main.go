@@ -1,7 +1,6 @@
 package day11
 
 import (
-	"log"
 	"math"
 	"strconv"
 	"strings"
@@ -17,12 +16,37 @@ func PartTwo(input string) (string, error) {
 	return "", nil
 }
 
+func (f facility) validMove(bits []string, up bool){
+	allBits = append(bits, f.getItemsOnFloor(f.elevator)...)
+
+	counts := make(map[string]int)
+
+	for k, v := range {
+			initial := strings.ToUpper(k[:1])
+
+			if(allBits.)
+	}
+}
+
+// get all the items on the specified floor
+func (f facility) getItemsOnFloor(floor int) []string {
+	bits := make([]string, 0)
+	for k, v := range f.reactors {
+		if v.generator == floor {
+			bits = append(bits, strings.ToUpper(k[:1]+"G"))
+		}
+		if v.microchip == floor {
+			bits = append(bits, strings.ToUpper(k[:1]+"M"))
+		}
+	}
+	return bits
+}
+
 // Given a list of items, returns a list of
 // all the possibly combinations of items
 // that could be put into the elevator.
 func elevatorCombinations(bits []string) [][]string {
 	parts := make([][]string, 0)
-
 	maxCard := int(math.Pow(2, float64(len(bits))))
 
 	for i := 0; i < maxCard; i++ {
@@ -39,6 +63,5 @@ func elevatorCombinations(bits []string) [][]string {
 			parts = append(parts, takeParts)
 		}
 	}
-	log.Println(parts)
 	return parts
 }

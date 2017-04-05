@@ -16,16 +16,27 @@ func PartTwo(input string) (string, error) {
 	return "", nil
 }
 
-func (f facility) validMove(bits []string, up bool){
-	allBits = append(bits, f.getItemsOnFloor(f.elevator)...)
-
+func (f facility) validMove(bits []string, floor int) bool {
+	allBits := append(bits, f.getItemsOnFloor(floor)...)
 	counts := make(map[string]int)
 
-	for k, v := range {
-			initial := strings.ToUpper(k[:1])
-
-			if(allBits.)
+	// if we have 2 of the same bits, all good, if we have just one, bad
+	for _, bit := range allBits {
+		initial := bit[:1]
+		if _, ok := counts[initial]; ok {
+			counts[initial]++
+		} else {
+			counts[initial] = 1
+		}
 	}
+
+	for _, v := range counts {
+		if v == 1 {
+			return false
+		}
+	}
+
+	return true
 }
 
 // get all the items on the specified floor

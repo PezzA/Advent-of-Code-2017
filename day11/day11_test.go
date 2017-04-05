@@ -36,5 +36,18 @@ func Test_Day11(t *testing.T) {
 			So(items[1], ShouldResemble, []string{"LM"})
 			So(items[2], ShouldResemble, []string{"HM", "LM"})
 		})
+
+		Convey("-> Should be able to detect if moves are valid", func() {
+
+			So(f.validMove([]string{"LM"}, 1), ShouldEqual, false)
+			So(f.validMove([]string{"HM"}, 1), ShouldEqual, true)
+			So(f.validMove([]string{"HM", "LM"}, 1), ShouldEqual, false)
+
+			f.elevator = 1
+
+			So(f.validMove([]string{"HG"}, 0), ShouldEqual, false)
+			So(f.validMove([]string{"HG"}, 2), ShouldEqual, true)
+
+		})
 	})
 }

@@ -1,5 +1,6 @@
 package day11
 
+/*
 import (
 	"fmt"
 	"strconv"
@@ -39,3 +40,4 @@ func (f facility) drawFacility() {
 		fmt.Println(f.getLine(i))
 	}
 }
+*/

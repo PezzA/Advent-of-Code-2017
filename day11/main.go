@@ -1,11 +1,5 @@
 package day11
 
-import (
-	"math"
-	"strconv"
-	"strings"
-)
-
 // PartOne returns the solution to day11 part one
 func PartOne(input string) (string, error) {
 	return "", nil
@@ -16,43 +10,20 @@ func PartTwo(input string) (string, error) {
 	return "", nil
 }
 
-func (f facility) validMove(bits []string, floor int) bool {
-	allBits := append(bits, f.getItemsOnFloor(floor)...)
-	counts := make(map[string]int)
+//get all the items on the specified floor
+func (f facility) getItemsOnFloor(floor int) []component {
+	components := make([]component, 0)
 
-	// if we have 2 of the same bits, all good, if we have just one, bad
-	for _, bit := range allBits {
-		initial := bit[:1]
-		if _, ok := counts[initial]; ok {
-			counts[initial]++
-		} else {
-			counts[initial] = 1
+	for _, comp := range f.components {
+		if comp.floor == floor {
+			components = append(components, comp)
 		}
 	}
 
-	for _, v := range counts {
-		if v == 1 {
-			return false
-		}
-	}
-
-	return true
+	return components
 }
 
-// get all the items on the specified floor
-func (f facility) getItemsOnFloor(floor int) []string {
-	bits := make([]string, 0)
-	for k, v := range f.reactors {
-		if v.generator == floor {
-			bits = append(bits, strings.ToUpper(k[:1]+"G"))
-		}
-		if v.microchip == floor {
-			bits = append(bits, strings.ToUpper(k[:1]+"M"))
-		}
-	}
-	return bits
-}
-
+/*
 // Given a list of items, returns a list of
 // all the possibly combinations of items
 // that could be put into the elevator.
@@ -76,3 +47,4 @@ func elevatorCombinations(bits []string) [][]string {
 	}
 	return parts
 }
+*/

@@ -1,22 +1,29 @@
 package day11
 
-type reactor struct {
-	microchip int
-	generator int
-}
-
-type reactorList map[string]reactor
+import (
+	"strings"
+)
 
 type facility struct {
-	elevator int
-	floors   int
-	elements []string
-	reactors reactorList
+	elevator   int
+	floors     int
+	components []component
 }
 
-type solveState struct {
-	depth          int
-	state          facility
-	previousStates []facility
-	subStates      []solveState
+type component struct {
+	floor       int
+	element     string
+	isMicrochip bool
+}
+
+func (c component) getInitial() string {
+	return strings.ToUpper(c.element[:1])
+}
+
+func (c component) shortName() string {
+	if c.isMicrochip {
+		return c.getInitial() + "M"
+	}
+
+	return c.getInitial() + "G"
 }

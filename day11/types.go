@@ -6,7 +6,6 @@ import (
 
 type facility struct {
 	elevator   int
-	floors     int
 	components []component
 }
 
@@ -14,6 +13,11 @@ type component struct {
 	floor       int
 	element     string
 	isMicrochip bool
+}
+
+type solveState struct {
+	f         facility
+	subStates []solveState
 }
 
 func (c component) getInitial() string {

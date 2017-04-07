@@ -24,5 +24,5 @@ func getStartingFacility(s string) facility {
 		}
 	}
 
-	return facility{0, 4, componentList}
+	return facility{0, componentList}
 }

@@ -1,10 +1,8 @@
 package day11
 
-/*
 import (
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 func (f facility) getLine(floor int) string {
@@ -17,27 +15,27 @@ func (f facility) getLine(floor int) string {
 	} else {
 		line += ".  "
 	}
-
-	for _, element := range f.elements {
-		initial := strings.ToUpper(element[:1])
-		if f.reactors[element].generator == floor {
-			line += initial + "G  "
-		} else {
-			line += ".   "
+	/*
+		for _, element := range f.elements {
+			initial := strings.ToUpper(element[:1])
+			if f.reactors[element].generator == floor {
+				line += initial + "G  "
+			} else {
+				line += ".   "
+			}
+			if f.reactors[element].microchip == floor {
+				line += initial + "M  "
+			} else {
+				line += ".   "
+			}
 		}
-		if f.reactors[element].microchip == floor {
-			line += initial + "M  "
-		} else {
-			line += ".   "
-		}
-	}
+	*/
 	return line
 }
 
 func (f facility) drawFacility() {
 	fmt.Println("----")
-	for i := f.floors - 1; i >= 0; i-- {
+	for i := 4 - 1; i >= 0; i-- {
 		fmt.Println(f.getLine(i))
 	}
 }
-*/

@@ -1,33 +1,30 @@
 package day11
 
-import (
-	"strings"
-)
+import "sort"
 
 type facility struct {
 	elevator   int
-	components []component
+	components componentList
 }
 
-type component struct {
-	floor       int
-	element     string
-	isMicrochip bool
+func (f facility) equals(compare facility) bool {
+	if f.elevator != compare.elevator {
+		return false
+	}
+
+	sort.Sort(f.components)
+	sort.Sort(compare.components)
+
+	for i := 0; i < len(f.components); i++ {
+		if !f.components[i].equals(compare.components[i]) {
+			return false
+		}
+	}
+
+	return true
 }
 
 type solveState struct {
 	f         facility
 	subStates []solveState
-}
-
-func (c component) getInitial() string {
-	return strings.ToUpper(c.element[:1])
-}
-
-func (c component) shortName() string {
-	if c.isMicrochip {
-		return c.getInitial() + "M"
-	}
-
-	return c.getInitial() + "G"
 }

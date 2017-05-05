@@ -9,7 +9,28 @@ type elf struct {
 	presents int
 }
 
-func getElves(count int) []elf {
+type circle []elf
+
+func (c circle) getNextActiveElf(currentPosition int) int {
+	if currentPosition == len(c) {
+		currentPosition = 0
+	}
+
+	currentElf := c[currentPosition]
+
+	for currentElf.presents == 0 {
+		if currentPosition < len(c)-1 {
+			currentPosition++
+		} else {
+			currentPosition = 0
+		}
+		currentElf = c[currentPosition]
+	}
+
+	return currentElf.index
+}
+
+func getElves(count int) circle {
 	elves := make([]elf, count)
 
 	for index := range elves {
@@ -19,37 +40,38 @@ func getElves(count int) []elf {
 	return elves
 }
 
+func (c circle) takePresents(circlePosition int) {
+	nextElf := c.getNextActiveElf(circlePosition - 1)
+	log.Println(nextElf)
+	c[circlePosition-1].presents += c[nextElf].presents
+	c[nextElf].presents = 0
+}
+
 // PartOne solves day 20 part one.
 func PartOne(input string) (string, error) {
 	elves := getElves(5)
-	position := 1
 
-	for len(elves) > 1 {
-		elves = takePresents(position, elves)
+	circlePosition := 1
 
-		if position < len(elves) {
-			position++
-		} else {
-			position = 1
+	loops := 0
+	for {
+		if loops == 10 {
+			break
+		}
+		elves.takePresents(circlePosition)
+
+		log.Println(circlePosition, elves)
+
+		if elves[circlePosition-1].presents == 5 {
+			break
 		}
 
-		log.Println(position)
+		circlePosition = elves.getNextActiveElf(circlePosition)
+
+		loops++
 	}
 
 	return "", nil
-}
-
-func takePresents(elf int, circle []elf) []elf {
-	indexElf := elf - 1
-
-	if elf == len(circle) {
-		circle[indexElf].presents += circle[0].presents
-		return circle[1:]
-	}
-
-	circle[indexElf].presents += circle[indexElf+1].presents
-
-	return circle
 }
 
 // PartTwo solves day 20 part one.

@@ -1,34 +1,55 @@
 package day19
 
+import (
+	"log"
+)
+
+type elf struct {
+	index    int
+	presents int
+}
+
+func getElves(count int) []elf {
+	elves := make([]elf, count)
+
+	for index := range elves {
+		elves[index] = elf{index + 1, 1}
+	}
+
+	return elves
+}
+
 // PartOne solves day 20 part one.
 func PartOne(input string) (string, error) {
+	elves := getElves(3005290)
+	position := 1
 
-	elves := make([]int, 5)
+	for len(elves) > 1 {
+		elves = takePresents(position, elves)
 
-	counter := 0
-	for len(elves) < 1 {
-
-		if counter < len(elves) {
-
+		if position < len(elves) {
+			position++
+		} else {
+			position = 1
 		}
 
-		elves[counter] += elves[counter+1]
+		log.Println(position)
 	}
 
 	return "", nil
 }
 
-func takePresents(elf int, circle []int) []int {
-	// take the 1 based index to a zero based index
-	elf--
+func takePresents(elf int, circle []elf) []elf {
+	indexElf := elf - 1
 
-	if elf == len(circle)-1 {
-		circle[elf] += circle[0]
+	if elf == len(circle) {
+		circle[indexElf].presents += circle[0].presents
 		return circle[1:]
 	}
 
-	circle[elf] += circle[elf+1]
-	return append(circle[:elf+1], circle[elf+2:]...)
+	circle[indexElf].presents += circle[indexElf+1].presents
+
+	return circle
 }
 
 // PartTwo solves day 20 part one.

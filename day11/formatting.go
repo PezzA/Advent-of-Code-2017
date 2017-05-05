@@ -15,6 +15,8 @@ func (f facility) getLine(floor int) string {
 	} else {
 		line += ".  "
 	}
+
+	for index, component := range 
 	/*
 		for _, element := range f.elements {
 			initial := strings.ToUpper(element[:1])

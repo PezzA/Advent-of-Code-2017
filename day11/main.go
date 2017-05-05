@@ -1,6 +1,7 @@
 package day11
 
 import (
+	"log"
 	"math"
 	"strconv"
 	"strings"
@@ -88,23 +89,64 @@ func (f facility) canGoUp() bool {
 	return false
 }
 
-func solve(inputState facility) solveState {
+func (f facility) isInPreviousList(states []facility) bool {
+	for _, state := range states {
+		if f.equals(state) {
+			return true
+		}
+	}
+	return false
+}
+
+func (f facility) isSolved() bool {
+	for _, component := range f.components {
+		if component.floor != 3 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func solve(inputState facility, previousStates []facility) solveState {
+
+	inputState.drawFacility()
+	// if the puzzle is solved return straight away
+	if inputState.isSolved() || len(previousStates) >= 2 {
+		return solveState{inputState, nil}
+	}
+
+	// solve state consists of the current facility state and a blank list of possible further moves
 	state := solveState{inputState, make([]solveState, 0)}
+
+	// get all the possible combinations of things we can put in the elevator
 	moves := elevatorCombinations(inputState.getItemsOnFloor(inputState.elevator))
 
 	// for each combination of items we can put in the elevator, move them up and down (if able too)
 	for _, move := range moves {
 		if inputState.canGoUp() {
-			if valid, newFacility := inputState.isValid(move, inputState.elevator+1); valid {
+			// check that the proposed move is valid, and dosent already exist in the list of previuos moves made
+			valid, newFacility := inputState.isValid(move, inputState.elevator+1)
+			haveSeenPreviously := inputState.isInPreviousList(previousStates)
+
+			if valid && !haveSeenPreviously {
+				log.Print("Depth is ", len(previousStates), " Elevator is on floor ", inputState.elevator, " Sending ", move, " UP.")
 				state.subStates = append(state.subStates, solveState{newFacility, make([]solveState, 0)})
 			}
 		}
 		if inputState.canGoDown() {
-			if valid, newFacility := inputState.isValid(move, inputState.elevator-1); valid {
+			if valid, newFacility := inputState.isValid(move, inputState.elevator-1); valid &&
+				!inputState.isInPreviousList(previousStates) {
+				log.Print("Depth is ", len(previousStates), " Elevator is on floor ", inputState.elevator, " Sending ", move, " DOWN.")
 				state.subStates = append(state.subStates, solveState{newFacility, make([]solveState, 0)})
 			}
 		}
 	}
+
+	for _, subState := range state.subStates {
+		solve(subState.f, append(previousStates, inputState))
+	}
+
 	return state
 }
 

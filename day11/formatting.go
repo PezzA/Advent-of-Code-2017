@@ -2,6 +2,8 @@ package day11
 
 import (
 	"fmt"
+	"log"
+	"sort"
 	"strconv"
 )
 
@@ -16,27 +18,23 @@ func (f facility) getLine(floor int) string {
 		line += ".  "
 	}
 
-	for index, component := range 
-	/*
-		for _, element := range f.elements {
-			initial := strings.ToUpper(element[:1])
-			if f.reactors[element].generator == floor {
-				line += initial + "G  "
-			} else {
-				line += ".   "
-			}
-			if f.reactors[element].microchip == floor {
-				line += initial + "M  "
-			} else {
-				line += ".   "
-			}
+	sortedComponents := f.components
+
+	sort.Sort(sortedComponents)
+
+	for _, component := range sortedComponents {
+		if component.floor == floor {
+			line += component.shortName() + " "
+		} else {
+			line += ".  "
 		}
-	*/
+	}
+
 	return line
 }
 
 func (f facility) drawFacility() {
-	fmt.Println("----")
+	log.Println("-----------------------------------")
 	for i := 4 - 1; i >= 0; i-- {
 		fmt.Println(f.getLine(i))
 	}

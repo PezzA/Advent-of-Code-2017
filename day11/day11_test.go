@@ -1,6 +1,7 @@
 package day11
 
 import (
+	"sort"
 	"testing"
 
 	"log"
@@ -17,18 +18,33 @@ func Test_Day11(t *testing.T) {
 		hydrogenGenerator := component{1, "hydrogen", false}
 		lithiumGenerator := component{2, "lithium", false}
 
-		Convey("-> Parse the puzzle input", func() {
-			components := make([]component, 0)
-			components = append(components, hydrogenMicrochip)
-			components = append(components, lithiumMicrochip)
-			components = append(components, hydrogenGenerator)
-			components = append(components, lithiumGenerator)
+		testComponentList := make(componentList, 0)
+		testComponentList = append(testComponentList, hydrogenMicrochip)
+		testComponentList = append(testComponentList, lithiumMicrochip)
+		testComponentList = append(testComponentList, hydrogenGenerator)
+		testComponentList = append(testComponentList, lithiumGenerator)
 
-			So(f, ShouldResemble, facility{0, components})
+		Convey("-> Parse the puzzle input", func() {
+			So(f, ShouldResemble, facility{0, testComponentList})
 		})
 
 		Convey("-> Draw the facility", func() {
 			f.drawFacility()
+		})
+
+		Convey("-> Should be able to tell if 2 components are the same", func() {
+			So(lithiumGenerator.equals(lithiumMicrochip), ShouldBeFalse)
+			So(lithiumGenerator.equals(component{2, "lithium", false}), ShouldBeTrue)
+		})
+
+		Convey("-> Should be able to sort a component list", func() {
+			tempL := testComponentList
+
+			sort.Sort(tempL)
+			So(tempL[0], ShouldResemble, hydrogenMicrochip)
+			So(tempL[1], ShouldResemble, hydrogenGenerator)
+			So(tempL[2], ShouldResemble, lithiumMicrochip)
+			So(tempL[3], ShouldResemble, lithiumGenerator)
 		})
 
 		Convey("-> Get all the stuff on the specified floor", func() {
@@ -46,15 +62,33 @@ func Test_Day11(t *testing.T) {
 			So(items[2], ShouldResemble, []component{hydrogenMicrochip, lithiumMicrochip})
 		})
 
-		Convey("-> Should be able to detect if moves are valid", func() {
+		Convey("-> Should be able to tell 2 facilties have the same state", func() {
+			x := getStartingFacility(testInput())
 
-			log.Println("starting facility", f)
-			state := solve(f)
-			for _, newstate := range state.subStates {
-				log.Println("Solving Substate", newstate.f)
-				log.Println(solve(newstate.f))
-			}
+			y := getStartingFacility(testInput())
+
+			So(x.equals(y), ShouldBeTrue)
+
+			y.elevator = 2
+
+			So(x.equals(y), ShouldBeFalse)
+
+			y.elevator = 0
+			y.components[0].floor = 3
+
+			So(x.equals(y), ShouldBeFalse)
+
+			y.components[0].floor = 0
+
+			So(x.equals(y), ShouldBeTrue)
+
 		})
 
+		Convey("-> Should be able to detect if moves are valid", func() {
+
+			log.Println("############################################################")
+			solve(f, make([]facility, 0))
+
+		})
 	})
 }

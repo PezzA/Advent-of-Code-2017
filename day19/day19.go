@@ -1,24 +1,26 @@
 package day19
 
 import (
-	"log"
+	"strconv"
 )
 
-type elf struct {
-	index    int
-	presents int
+type circle []int
+
+func getAdjacentElf(circleSize int, position int) int {
+	return (circleSize / 2) + position ^ circleSize
 }
 
-type circle []elf
-
+// getNextActiveElf uses zero based index
 func (c circle) getNextActiveElf(currentPosition int) int {
-	if currentPosition == len(c) {
+	if currentPosition == len(c)-1 {
 		currentPosition = 0
+	} else {
+		currentPosition++
 	}
 
 	currentElf := c[currentPosition]
 
-	for currentElf.presents == 0 {
+	for currentElf == 0 {
 		if currentPosition < len(c)-1 {
 			currentPosition++
 		} else {
@@ -27,54 +29,55 @@ func (c circle) getNextActiveElf(currentPosition int) int {
 		currentElf = c[currentPosition]
 	}
 
-	return currentElf.index
+	return currentPosition
 }
 
 func getElves(count int) circle {
-	elves := make([]elf, count)
+	elves := make([]int, count)
 
 	for index := range elves {
-		elves[index] = elf{index + 1, 1}
+		elves[index] = 1
 	}
 
 	return elves
 }
 
-func (c circle) takePresents(circlePosition int) {
-	nextElf := c.getNextActiveElf(circlePosition - 1)
-	log.Println(nextElf)
-	c[circlePosition-1].presents += c[nextElf].presents
-	c[nextElf].presents = 0
+func (c circle) takePresentsFromLeft(circlePosition int) bool {
+	nextElf := c.getNextActiveElf(circlePosition)
+	c[circlePosition] += c[nextElf]
+	c[nextElf] = 0
+
+	return c[circlePosition] == len(c)
 }
 
 // PartOne solves day 20 part one.
 func PartOne(input string) (string, error) {
-	elves := getElves(5)
+	circleSize, _ := strconv.Atoi(input)
 
-	circlePosition := 1
+	elves := getElves(circleSize)
 
-	loops := 0
-	for {
-		if loops == 10 {
-			break
-		}
-		elves.takePresents(circlePosition)
+	nextElf := 0
+	finished := false
 
-		log.Println(circlePosition, elves)
-
-		if elves[circlePosition-1].presents == 5 {
-			break
-		}
-
-		circlePosition = elves.getNextActiveElf(circlePosition)
-
-		loops++
+	for !finished {
+		finished = elves.takePresentsFromLeft(nextElf)
+		nextElf = elves.getNextActiveElf(nextElf)
 	}
-
-	return "", nil
+	return strconv.Itoa(nextElf + 1), nil
 }
 
 // PartTwo solves day 20 part one.
 func PartTwo(input string) (string, error) {
-	return "", nil
+	circleSize, _ := strconv.Atoi(input)
+
+	elves := getElves(circleSize)
+
+	nextElf := 0
+	finished := false
+
+	for !finished {
+		finished = elves.takePresentsFromLeft(nextElf)
+		nextElf = elves.getNextActiveElf(nextElf)
+	}
+	return strconv.Itoa(nextElf + 1), nil
 }

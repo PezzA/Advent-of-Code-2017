@@ -3,8 +3,6 @@ package day12
 import (
 	"testing"
 
-	"log"
-
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -20,7 +18,26 @@ dec a`
 func Test_Day12(t *testing.T) {
 	Convey("Day 12 should be able to", t, func() {
 		Convey("Load a program", func() {
-			log.Println(getProgram(testInput()))
+			prog := getProgram(testInput())
+			So(len(prog), ShouldEqual, 6)
+		})
+
+		Convey("Run the test program", func() {
+			prog := getProgram(testInput())
+			registers := makeRegisters()
+
+			result := runProgram(prog, registers, "a")
+
+			So(result, ShouldEqual, 42)
+		})
+
+		Convey("Run the real program", func() {
+			prog := getProgram(PuzzleInput())
+			registers := makeRegisters()
+
+			result := runProgram(prog, registers, "a")
+			So(result, ShouldEqual, 318020)
 		})
 	})
+
 }

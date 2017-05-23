@@ -45,12 +45,12 @@ func getProgram(input string) program {
 			}
 
 		case "dec":
-			prog = append(prog, instruction{2, bits[1], -1, ""})
-		case "inc":
 			prog = append(prog, instruction{3, bits[1], -1, ""})
+		case "inc":
+			prog = append(prog, instruction{4, bits[1], -1, ""})
 		case "jnz":
 			intVal, _ := strconv.Atoi(bits[2])
-			prog = append(prog, instruction{4, bits[1], intVal, ""})
+			prog = append(prog, instruction{5, bits[1], intVal, ""})
 		}
 	}
 
@@ -90,16 +90,19 @@ func runProgram(prog program, reg registers, finalPin string) int {
 			reg.copyr(step.source, step.target)
 			caret++
 		case 3:
-			reg.inc(step.source)
+			reg.dec(step.source)
 			caret++
 		case 4:
-			reg.dec(step.source)
+			reg.inc(step.source)
 			caret++
 		case 5:
 			if reg.get(step.source) != 0 {
 				caret += step.sourceVal
+			} else {
+				caret++
 			}
 		}
+
 	}
 
 	return reg.get("a")

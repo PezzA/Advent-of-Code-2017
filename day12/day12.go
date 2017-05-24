@@ -12,6 +12,7 @@ type instruction struct {
 	source    string
 	sourceVal int
 	target    string
+	targetVal int
 }
 
 type program []instruction
@@ -39,18 +40,26 @@ func getProgram(input string) program {
 			intVal, err := strconv.Atoi(bits[1])
 
 			if err == nil {
-				prog = append(prog, instruction{1, bits[1], intVal, bits[2]})
+				prog = append(prog, instruction{1, bits[1], intVal, bits[2], 0})
 			} else {
-				prog = append(prog, instruction{2, bits[1], -1, bits[2]})
+				prog = append(prog, instruction{2, bits[1], -1, bits[2], 0})
 			}
 
 		case "dec":
-			prog = append(prog, instruction{3, bits[1], -1, ""})
+			prog = append(prog, instruction{3, bits[1], -1, "", 0})
 		case "inc":
-			prog = append(prog, instruction{4, bits[1], -1, ""})
+			prog = append(prog, instruction{4, bits[1], -1, "", 0})
 		case "jnz":
+			cmpVal, err := strconv.Atoi(bits[1])
+
 			intVal, _ := strconv.Atoi(bits[2])
-			prog = append(prog, instruction{5, bits[1], intVal, ""})
+
+			if err == nil {
+				prog = append(prog, instruction{6, "", cmpVal, "", intVal})
+			} else {
+				prog = append(prog, instruction{5, bits[1], 0, "", intVal})
+			}
+
 		}
 	}
 
@@ -97,7 +106,13 @@ func runProgram(prog program, reg registers, finalPin string) int {
 			caret++
 		case 5:
 			if reg.get(step.source) != 0 {
-				caret += step.sourceVal
+				caret += step.targetVal
+			} else {
+				caret++
+			}
+		case 6:
+			if step.sourceVal != 0 {
+				caret += step.targetVal
 			} else {
 				caret++
 			}
@@ -110,10 +125,21 @@ func runProgram(prog program, reg registers, finalPin string) int {
 
 // PartOne solves day 12 part one.
 func PartOne(input string) (string, error) {
-	return "", nil
+	prog := getProgram(PuzzleInput())
+	registers := makeRegisters()
+
+	result := runProgram(prog, registers, "a")
+
+	return strconv.Itoa(result), nil
 }
 
 // PartTwo solves day 12 part one.
 func PartTwo(input string) (string, error) {
-	return "", nil
+	prog := getProgram(PuzzleInput())
+	registers := makeRegisters()
+
+	registers["c"] = 1
+	result := runProgram(prog, registers, "a")
+
+	return strconv.Itoa(result), nil
 }

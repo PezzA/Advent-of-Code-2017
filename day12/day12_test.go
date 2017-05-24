@@ -38,6 +38,16 @@ func Test_Day12(t *testing.T) {
 			result := runProgram(prog, registers, "a")
 			So(result, ShouldEqual, 318020)
 		})
+
+		Convey("Run the modified real program", func() {
+			prog := getProgram(PuzzleInput())
+			registers := makeRegisters()
+
+			registers["c"] = 1
+
+			result := runProgram(prog, registers, "a")
+			So(result, ShouldEqual, 9227674)
+		})
 	})
 
 }

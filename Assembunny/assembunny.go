@@ -5,18 +5,14 @@ import (
 	"strings"
 )
 
-type Instruction struct {
-	action    int
-	source    string
-	sourceVal int
-	target    string
-	targetVal int
-}
-
+// Program is a slice of Assembunny instructions
 type Program []Instruction
 
+// Registers holds a series of int values
 type Registers map[string]int
 
+// GetProgram will take a string that holds a text description of a program and parse this into
+// a Program
 func GetProgram(input string) Program {
 	prog := make(Program, 0)
 
@@ -29,26 +25,27 @@ func GetProgram(input string) Program {
 			intVal, err := strconv.Atoi(bits[1])
 
 			if err == nil {
-				prog = append(prog, Instruction{1, bits[1], intVal, bits[2], 0})
+				prog = append(prog, Instruction{copyVal, bits[1], intVal, bits[2], 0})
 			} else {
-				prog = append(prog, Instruction{2, bits[1], -1, bits[2], 0})
+				prog = append(prog, Instruction{copyReg, bits[1], -1, bits[2], 0})
 			}
 
 		case "dec":
-			prog = append(prog, Instruction{3, bits[1], -1, "", 0})
+			prog = append(prog, Instruction{inc, bits[1], -1, "", 0})
+
 		case "inc":
-			prog = append(prog, Instruction{4, bits[1], -1, "", 0})
+			prog = append(prog, Instruction{dec, bits[1], -1, "", 0})
+
 		case "jnz":
 			cmpVal, err := strconv.Atoi(bits[1])
 
 			intVal, _ := strconv.Atoi(bits[2])
 
 			if err == nil {
-				prog = append(prog, Instruction{6, "", cmpVal, "", intVal})
+				prog = append(prog, Instruction{jumpVal, "", cmpVal, "", intVal})
 			} else {
-				prog = append(prog, Instruction{5, bits[1], 0, "", intVal})
+				prog = append(prog, Instruction{jumpReg, bits[1], 0, "", intVal})
 			}
-
 		}
 	}
 
@@ -75,39 +72,43 @@ func (r Registers) get(target string) int {
 	return r[target]
 }
 
-func RunProgram(prog Program, reg Registers, finalPin string) int {
+// RunProgram does some stuff, just getting rid of the green stuff
+func RunProgram(prog Program, reg Registers) Registers {
 	caret := 0
-
 	for caret <= len(prog)-1 {
 		step := prog[caret]
 		switch step.action {
-		case 1:
+		case copyVal:
 			reg.copyi(step.sourceVal, step.target)
 			caret++
-		case 2:
+
+		case copyReg:
 			reg.copyr(step.source, step.target)
 			caret++
-		case 3:
+
+		case dec:
 			reg.dec(step.source)
 			caret++
-		case 4:
+
+		case inc:
 			reg.inc(step.source)
 			caret++
-		case 5:
+
+		case jumpReg:
 			if reg.get(step.source) != 0 {
 				caret += step.targetVal
 			} else {
 				caret++
 			}
-		case 6:
+
+		case jumpVal:
 			if step.sourceVal != 0 {
 				caret += step.targetVal
 			} else {
 				caret++
 			}
 		}
-
 	}
 
-	return reg.get("a")
+	return reg
 }

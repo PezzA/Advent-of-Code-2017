@@ -27,17 +27,17 @@ func Test_Day12(t *testing.T) {
 			prog := Assembunny.GetProgram(testInput())
 			registers := makeRegisters()
 
-			result := Assembunny.RunProgram(prog, registers, "a")
+			registers = Assembunny.RunProgram(prog, registers)
 
-			So(result, ShouldEqual, 42)
+			So(registers["a"], ShouldEqual, 42)
 		})
 
 		Convey("Run the real program", func() {
 			prog := Assembunny.GetProgram(PuzzleInput())
 			registers := makeRegisters()
 
-			result := Assembunny.RunProgram(prog, registers, "a")
-			So(result, ShouldEqual, 318020)
+			registers = Assembunny.RunProgram(prog, registers)
+			So(registers["a"], ShouldEqual, 318020)
 		})
 
 		Convey("Run the modified real program", func() {
@@ -46,8 +46,8 @@ func Test_Day12(t *testing.T) {
 
 			registers["c"] = 1
 
-			result := Assembunny.RunProgram(prog, registers, "a")
-			So(result, ShouldEqual, 9227674)
+			registers = Assembunny.RunProgram(prog, registers)
+			So(registers["a"], ShouldEqual, 9227674)
 		})
 	})
 

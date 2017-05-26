@@ -78,6 +78,7 @@ func RunProgram(prog Program, reg Registers) Registers {
 	for caret <= len(prog)-1 {
 		step := prog[caret]
 		switch step.action {
+
 		case copyVal:
 			reg.copyi(step.sourceVal, step.target)
 			caret++
@@ -107,6 +108,14 @@ func RunProgram(prog Program, reg Registers) Registers {
 			} else {
 				caret++
 			}
+
+		case toggle:
+			targetInstruction := caret + reg.get(step.source)
+
+			if targetInstruction <= len(prog)-1 {
+				prog[targetInstruction] = prog[targetInstruction].toggle()
+			}
+			caret++
 		}
 	}
 

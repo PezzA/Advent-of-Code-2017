@@ -22,7 +22,31 @@ type Instruction struct {
 }
 
 func (i Instruction) toggle() Instruction {
-	return i
+	if i.isDualArg() {
+		if i.action == jumpVal {
+			return Instruction{copyVal, i.source, i.sourceVal, i.target, i.targetVal}
+		}
+
+		if i.action == jumpReg {
+			return Instruction{copyReg, i.source, i.sourceVal, i.target, i.targetVal}
+		}
+
+		if i.sourceVal != 0 {
+			return Instruction{jumpVal, i.source, i.sourceVal, i.target, i.targetVal}
+		}
+
+		return Instruction{jumpReg, i.source, i.sourceVal, i.target, i.targetVal}
+	}
+
+	if i.action == dec {
+		return Instruction{inc, i.source, i.sourceVal, i.target, i.targetVal}
+	}
+
+	if i.action == inc {
+		return Instruction{dec, i.source, i.sourceVal, i.target, i.targetVal}
+	}
+
+	return Instruction{inc, i.source, i.sourceVal, i.target, i.targetVal}
 }
 
 func (i Instruction) isDualArg() bool {

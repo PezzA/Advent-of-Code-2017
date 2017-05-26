@@ -19,9 +19,9 @@ func PartOne(input string) (string, error) {
 	prog := Assembunny.GetProgram(PuzzleInput())
 	registers := makeRegisters()
 
-	result := Assembunny.RunProgram(prog, registers, "a")
+	registers = Assembunny.RunProgram(prog, registers)
 
-	return strconv.Itoa(result), nil
+	return strconv.Itoa(registers["a"]), nil
 }
 
 // PartTwo solves day 12 part one.
@@ -30,7 +30,7 @@ func PartTwo(input string) (string, error) {
 	registers := makeRegisters()
 
 	registers["c"] = 1
-	result := Assembunny.RunProgram(prog, registers, "a")
+	registers = Assembunny.RunProgram(prog, registers)
 
-	return strconv.Itoa(result), nil
+	return strconv.Itoa(registers["a"]), nil
 }
